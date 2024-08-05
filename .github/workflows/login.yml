@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   
   schedule:
-    - cron: '7 12 */7 * *'
+    - cron: '7 12 */7 * *'  # 每7天的12:07触发
 
 env:
   ACCOUNTS_JSON: ${{ secrets.ACCOUNTS_JSON }}
@@ -20,16 +20,17 @@ jobs:
       - name: Set up Node.js  
         uses: actions/setup-node@v3  
         with:  
-          node-version: '20.x'  
+          node-version: '20.x'  # 明确指定Node.js版本为20.x
   
       - name: Install dependencies  
-        run: npm install puppeteer  
+        run: npm install puppeteer  # 安装puppeteer依赖
   
       - name: Create accounts.json  
-        run: echo "$ACCOUNTS_JSON" > accounts.json  
+        run: echo "$ACCOUNTS_JSON" > accounts.json  # 创建accounts.json文件
   
       - name: Login to website  
         run: |  
-          set -e  
-          xvfb-run --server-args="-screen 0 1280x1024x24" node login.js
+          set -e  # 任何命令失败时停止执行
+          xvfb-run --server-args="-screen 0 1280x1024x24" node login.js  # 使用xvfb运行login.js
+
 
